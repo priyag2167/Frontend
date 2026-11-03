@@ -171,7 +171,6 @@ export default function OrganisationSettings() {
 function BrandForm({ value }: { value: OrganisationData }) {
   const [companyName, setCompany] = useState(value.branding?.companyName ?? ""),
     [logoUrl, setLogoUrl] = useState(value.branding?.logoUrl ?? ""),
-    [previewFailedUrl, setPreviewFailedUrl] = useState<string | null>(null),
     [productName, setProduct] = useState(
       value.branding?.productName ?? "Pharma VRM",
     ),
@@ -205,13 +204,7 @@ function BrandForm({ value }: { value: OrganisationData }) {
   return (
     <form className="form-stack" onSubmit={submit}>
       <div className="brand brand-preview" aria-label="Brand preview">
-        <BrandLogo
-          url={logoUrl.trim()}
-          companyName={companyName}
-          preview
-          onImageError={setPreviewFailedUrl}
-          onImageLoad={() => setPreviewFailedUrl(null)}
-        />
+        <BrandLogo url={logoUrl.trim()} companyName={companyName} />
         <div>
           {productName || "Pharma VRM"}
           <span>{companyName || "Your company"}</span>
@@ -235,7 +228,7 @@ function BrandForm({ value }: { value: OrganisationData }) {
       </Field>
       <Field
         label="Company logo URL (optional)"
-        hint="Use a public HTTPS image URL or a path such as /company-logo.png. Clear this field to use the default logo."
+        hint="Use an HTTPS image URL or a path such as /company-logo.png. Clear this field to use the default logo."
       >
         <input
           type="text"
@@ -245,12 +238,6 @@ function BrandForm({ value }: { value: OrganisationData }) {
           placeholder="https://your-company.com/logo.png"
         />
       </Field>
-      {logoUrl.trim() && previewFailedUrl === logoUrl.trim() && (
-        <p className="brand-image-error" role="alert">
-          This logo image could not be loaded. Check that the URL opens a public
-          image.
-        </p>
-      )}
       <div className="form-grid">
         <Field label="Primary colour">
           <input

@@ -2,9 +2,6 @@ const BASE = (import.meta.env.VITE_API_BASE_URL?.trim() || "/api/v1").replace(
   /\/+$/,
   "",
 );
-export function apiAssetUrl(path: string) {
-  return `${BASE}${path}`;
-}
 export class ApiError extends Error {
   constructor(
     public status: number,
