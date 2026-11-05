@@ -101,10 +101,12 @@ export default function Login() {
       </section>
       <section className="login-form-panel">
         <div className="login-form-wrap">
-          <span className="eyebrow">WELCOME TO YOUR WORKSPACE</span>
+          <span className="eyebrow">{productName} workspace</span>
           <h2>Welcome back.</h2>
           <p className="muted">
-            Sign in with your organisation account to continue.
+            Sign in to your {productName} account
+            {branding?.companyName ? ` for ${branding.companyName}` : ""} to
+            continue.
           </p>
           {signInNotice && <p role="status">{signInNotice}</p>}
           <form className="form-stack" onSubmit={submit}>
@@ -119,14 +121,17 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Field>
-            <Field label="Password">
+            <Field
+              label="Workspace password"
+              hint={`Use the password for your ${productName} account.`}
+            >
               <div className="password-input">
                 <input
                   type={visible ? "text" : "password"}
                   required
                   maxLength={256}
                   autoComplete="current-password"
-                  placeholder="Enter your password"
+                  placeholder="Enter your workspace password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -157,7 +162,8 @@ export default function Login() {
             </span>
           </div>
           <div className="login-help">
-            Need help signing in? Contact your company administrator.
+            Your company administrator provides access to this workspace.
+            Contact them if you need an account or a password reset.
           </div>
         </div>
         <small className="login-copyright">
